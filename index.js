@@ -1,9 +1,13 @@
-const express = require("express");
+import express from 'express';
 const app = express();
-const http = require("http");
+import * as http from 'http';
 const server = http.createServer(app);
-const { Server } = require("socket.io");
+import { Server } from 'socket.io';
 const io = new Server(server);
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
