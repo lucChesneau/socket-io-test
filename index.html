@@ -33,6 +33,7 @@
       socket.emit('chat message', input.value);
       input.value = '';
     }
+    
   });
   socket.on('chat message', function(msg) {
     const item = document.createElement('li');
