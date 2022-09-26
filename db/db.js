@@ -1,3 +1,3 @@
 import { Sequelize } from 'sequelize';
-
-export default new Sequelize('socketdatabase', 'root', 'root', {dialect: 'mysql', host: 'localhost', port: 8889});
+const sequelize = new Sequelize('socketdatabase', 'root', 'root', {dialect: 'mysql', host: 'localhost', port: 8889});
+export default sequelize;

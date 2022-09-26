@@ -1,8 +1,8 @@
 import { Router } from "express";
-
-import { getAll, getOne, createOne, updateOne, deleteOne } from '../controllers/ctrl.js';
+import { connexion, getAll, getOne, createOne, updateOne, deleteOne } from '../controllers/ctrl.js';
 const router = Router();
 
+router.get('/connexion', connexion);
 router.get('/getAll', getAll);
 router.get('getOne/:id', getOne);
 router.post('createOne', createOne);
