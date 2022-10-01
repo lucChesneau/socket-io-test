@@ -1,11 +1,12 @@
 // import User from "../../models/User.js";
+import bcrypt from 'bcrypt';
 
 
 const authform = document.getElementById("registerForm");
 
 
 
-authform.addEventListener("submit", (e) => {
+authform.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const firstName = document.querySelector("input[name='firstName']").value;
@@ -15,7 +16,7 @@ authform.addEventListener("submit", (e) => {
         const password = document.querySelector("input[name='password']").value;
         const confirmPassword = document.querySelector("input[name='confirmPassword']").value;
 
-
+ 
 
         fetch("/register", {
                 method: "POST",
@@ -34,9 +35,6 @@ authform.addEventListener("submit", (e) => {
         .then((res) => res.json())
         .then((data) => {
                 console.log(data.redirect);
-                if(data.redirect) {
-                        window.location.href = data.redirect;
-                }
         })
         .catch(err => {
                 console.log(err);
