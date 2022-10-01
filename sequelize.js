@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes } from "sequelize";
-import sequelize from "./db/db.js";
-import User from "./models/User.js";
+import sequelize from "./public/db/db.js";
+import User from "./public/models/User.js";
 
 
 async function dbConnect() {
