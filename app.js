@@ -8,6 +8,7 @@ const io = new Server(server);
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import dbConnect from "./sequelize.js";
+import { getUsername } from './public/vues/connected.js'
 
 dbConnect();
 
@@ -24,13 +25,15 @@ app.use("/models", express.static('models'));
 
 
 
-
-
-
 io.on("connection", (socket) => {
   console.log("a user connected");
-  socket.on("chat message", (msg) => {
-    io.emit("chat message", msg);
+  socket.on("chat message", (msg, cookie) => {
+    const username = getUsername(cookie);
+    if (username) {
+      io.emit("chat message", username + " : " + msg);
+    } else {
+      io.emit("chat message", msg);
+    }
   });
   socket.on("disconnect", () => {
     console.log("user disconnected");

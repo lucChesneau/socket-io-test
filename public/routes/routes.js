@@ -6,7 +6,7 @@ import authToken from "./middleware/middleware.js";
 import ConnexionRoute from './ConnexionRoute.js';
 const router = Router();
 
-router.get('/', index,);
+router.get('/', index);
 
 router.get('/wowtoken', authToken, index)
 
