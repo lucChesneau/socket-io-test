@@ -17,17 +17,18 @@ async function tryConnect(req, res) {
         if(user){
             const password_valid = await bcrypt.compare(req.body.password,user.password);
         if(password_valid){
-            const token = jwt.sign({ "id" : user.id,"email" : user.email,"first_name":user.first_name },process.env.SECRET);
-            res.status(200).json({ token : token });
+            const token = jwt.sign({ "id" : user.id,"email" : user.email, "first_name": user.first_name },process.env.SECRET);
+            res.cookie("token",token).sendFile(rootDir + "/public/vues/index/index.html");
+            // res.status(200).json({ token : token });
         } else {
             res.status(400).json({ error : "Password Incorrect" });
         }
-
         }else{
             res.status(404).json({ error : "User does not exist" });
         }
         
 }
+
 
 function register(req, res) {
         res.sendFile(rootDir + "/public/vues/register/register.html");
@@ -63,7 +64,7 @@ let ConnexionRoute = {
         connexion : connexion,
         register : register,
         tryConnect : tryConnect,
-        tryRegister : tryRegister
+        tryRegister : tryRegister,
 }
 
 // app.get('/cacs', (req, res) => {

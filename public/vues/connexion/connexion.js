@@ -1,7 +1,9 @@
 // import User from "../../models/User.js";
 const authform = document.getElementById("authform");
 
-
+const jsonCookie = document.cookie.split("; ").find(row => row.startsWith("token="));
+const token = jsonCookie.split("=")[1];
+console.log(token);
 
 authform.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -12,7 +14,8 @@ authform.addEventListener("submit", (e) => {
         fetch("/connexion", {
                 method: "POST",
                 headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        "authorization": "Bearer " + window.cookie.get("token")
                 },
                 body: JSON.stringify({
                         email: email,
@@ -24,8 +27,6 @@ authform.addEventListener("submit", (e) => {
 .then((data) => {
 
         console.log(data);
-
-
 
 }).catch(err => {
         console.log(err);
