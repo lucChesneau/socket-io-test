@@ -37,9 +37,13 @@ socket.on("disconnection_message", function(msg) {
   window.scrollTo(0, document.body.scrollHeight);
 });
 
-socket.on("online_user", function(msg) {
-  const item = document.createElement('li');
-  item.textContent = msg + " is online";
-  onlineUl.appendChild(item);
+socket.on("online_user", function(msgArray) {
+
+  for (let i = 0; i < msgArray.length; i++) {
+    const item = document.createElement('li');
+    item.textContent = msgArray[i];
+    onlineUl.appendChild(item);
+  }
+  
   window.scrollTo(0, document.body.scrollHeight);
 });
