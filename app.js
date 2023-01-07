@@ -39,8 +39,17 @@ io.on("connection", (socket) => {
       username = "Anonyme" + Math.floor(Math.random() * 1000);
     }
     if (username) {
+      usernameConnected.push(username);
       socket.broadcast.emit("connexion_user", `${username} has joined the chat`);
-      socket.emit("online_user", username);
+
+      let count = 0;
+      usernameConnected.find((usernamee, index) => {
+        if (usernamee == username) {
+          count == 0 ? count++ : usernameConnected.splice(index, 1);
+        }
+      });
+
+      socket.emit("online_user", usernameConnected);
     } else {
       socket.broadcast.emit(
         "connexion_user",
@@ -50,7 +59,9 @@ io.on("connection", (socket) => {
   });
 
   socket.on("chat message", (msg, cookie) => {
-    const username = getUsername(cookie);
+
+    let username = "";
+    cookie ? username = getUsername(cookie) : username = "Anonyme";
     if (username) {
       io.emit("chat message", username + " : " + msg);
     } else {
@@ -59,6 +70,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
+    console.log("user disconnected");
     socket.broadcast.emit("disconnection_message", usernameToleft)
   });
 
@@ -69,7 +81,7 @@ app.listen(3001, () => {
 });
 
 server.listen(3000, () => {
-  console.log("Server is running on port 3001");
+  console.log("Server is running on port 3000");
 });
 
 export { rootDir };
