@@ -8,12 +8,9 @@ function getCookie(cookie) {
         const jsonCookie = cookie.split("; ").find(row => row.startsWith("token="));
         const token = jsonCookie?.split("=")[1];
         
-        let decoded = null;
-        try {
-                decoded = jwt.verify(token, process.env.SECRET);
-        } catch (error) {
-                console.log(error);
-        }
+
+       let decoded = jwt.decode(token, process.env.SECRET);
+       
         
         return decoded;
     }

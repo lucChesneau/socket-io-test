@@ -26,15 +26,18 @@ app.use("/models", express.static("models"));
 
 
 
-
+// TODO POSSIBILITY TO CONNECT WITHOUT COOKIES
 io.on("connection", (socket) => {
+  console.log(cookie.token);
 
-    const cookies = cookie.parse(socket.handshake.headers.cookie);
-    const usernameToleft = jwt.verify(cookies.token, process.env.SECRET).username;
-    console.log(usernameToleft);
+    const cookies = cookie.parse(socket.handshake.headers.cookie || "");
+    let usernameToleft = jwt.decode(cookies.token, process.env.SECRET)?.username;
 
   socket.on("connexion_user", (cookie) => {
-    const username = getUsername(cookie);
+    let username = getUsername(cookie);
+    if(username === null) {
+      username = "Anonyme" + Math.floor(Math.random() * 1000);
+    }
     if (username) {
       socket.broadcast.emit("connexion_user", `${username} has joined the chat`);
       socket.emit("online_user", username);
@@ -51,12 +54,11 @@ io.on("connection", (socket) => {
     if (username) {
       io.emit("chat message", username + " : " + msg);
     } else {
-      io.emit("chat message", msg);
+      io.emit("chat message", "Anonyme : " + msg);
     }
   });
 
   socket.on("disconnect", () => {
-    console.log("user disconnected");
     socket.broadcast.emit("disconnection_message", usernameToleft)
   });
 

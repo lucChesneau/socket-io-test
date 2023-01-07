@@ -38,6 +38,7 @@ socket.on("disconnection_message", function(msg) {
 });
 
 socket.on("online_user", function(msg) {
+  console.log(msg);
   const item = document.createElement('li');
   item.textContent = msg + " is online";
   onlineUl.appendChild(item);

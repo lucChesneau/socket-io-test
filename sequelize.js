@@ -7,7 +7,7 @@ async function dbConnect() {
   try {
     await sequelize.authenticate();
     console.log("Connection has been established successfully.");
-      await User.sync({alter : true});
+      await User.sync({alter : false});
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }
