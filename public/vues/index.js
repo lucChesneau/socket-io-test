@@ -37,21 +37,10 @@ socket.on("disconnection_message", function(msg) {
   window.scrollTo(0, document.body.scrollHeight);
 });
 
-<<<<<<< HEAD
 socket.on("online_user", function(msg) {
   console.log(msg);
   const item = document.createElement('li');
   item.textContent = msg + " is online";
   onlineUl.appendChild(item);
-=======
-socket.on("online_user", function(msgArray) {
-
-  for (let i = 0; i < msgArray.length; i++) {
-    const item = document.createElement('li');
-    item.textContent = msgArray[i];
-    onlineUl.appendChild(item);
-  }
-  
->>>>>>> e8f7987ca19fa44e3e4a25c5507e32005cf7fcf6
   window.scrollTo(0, document.body.scrollHeight);
 });
